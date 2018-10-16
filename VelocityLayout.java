@@ -7,32 +7,35 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.Template;
+import java.io.StringWriter;
 
 public class VelocityLayout extends PatternLayout {
 	
 	private static VelocityContext thisContext = new VelocityContext();
 	private static StringWriter sw = new StringWriter();
+	private static Template template = new Template();
 	
 	//stringwriter context template make variable from event.get return writer.tostring override format
 	
 	@Override
     public String format(LoggingEvent event)
-	{
-		
-    	
-		
+	{	
 		thisContext.put("c", event.getLogger());
 		thisContext.put("d", event.toString());
 	    thisContext.put("m", event.getMessage());
 		thisContext.put("p", event.getLevel());
 		thisContext.put("t", event.getThreadName());
 		thisContext.put("n", "\n");
-		
-		Template template = Velocity.getTemplate("template.vm");
+					
+	    template = Velocity.getTemplate("template.vm");
 		
 		template.merge(thisContext, sw);
-		
+				
 		return sw.toString();
+		
+		
+		
 	}
 	
 

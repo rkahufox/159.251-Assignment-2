@@ -1,28 +1,33 @@
 package assign251_1.s16030627;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.velocity.Template;
+
 
 public class MemAppender extends AppenderSkeleton{
 
 	
-	public static MemAppender defaultInstance = new MemAppender();
+	private static MemAppender defaultInstance = null;
 	private static List<LoggingEvent> logs = null;
-	private static int maxSize, appendedEvents, discardedLogs;
-	
-	private MemAppender()
-	{						
-		super();
-	}
+	private static int maxSize = 10000;     //Default size - ten thousand
+	private static int appendedEvents, discardedLogs;
 	
 	private MemAppender(List<LoggingEvent> list)
 	{
 		super();
-		MemAppender.logs = list;
-		
+		logs = list;
+	}
+	
+	public static MemAppender getInstance(List<LoggingEvent> list)
+	{
+		if(defaultInstance == null)
+		{
+			defaultInstance = new MemAppender(list);	
+		}
+		return defaultInstance;
 	}
 	
 	
@@ -31,14 +36,20 @@ public class MemAppender extends AppenderSkeleton{
 		
 	}
 
+	
+	public void setMaxSize(int i)
+	{
+		maxSize = i;
+	}
 
 	@Override
 	protected void append(LoggingEvent eventToLog) {
 		logs.add(eventToLog);
 		appendedEvents++;
-		if(appendedEvents == maxSize)
+		if(appendedEvents >= maxSize)
 		{
 			logs.remove(logs.size()-1);	
+			System.out.println("Discarding log!");
 			discardedLogs++;
 		}
 		
