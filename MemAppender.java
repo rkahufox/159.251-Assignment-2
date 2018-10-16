@@ -9,22 +9,21 @@ import org.apache.log4j.spi.LoggingEvent;
 public class MemAppender extends AppenderSkeleton{
 
 	
-	private static MemAppender myAppender = null;
-	private static List<LoggingEvent> logs = new ArrayList<LoggingEvent>();
+	public static MemAppender defaultInstance = new MemAppender();
+	private static List<LoggingEvent> logs = null;
 	private static int maxSize, appendedEvents, discardedLogs;
 	
-	protected MemAppender()
+	private MemAppender()
 	{						
-		//Cannot create class unless through initialise method.
+		super();
 	}
 	
-	
-	public static MemAppender initialise() {
-	      if(myAppender == null) {
-	         MemAppender myAppender = new MemAppender();       //Singleton pattern to ensure only one instance.
-	      }
-	      return myAppender;
-	   }
+	private MemAppender(List<LoggingEvent> list)
+	{
+		super();
+		MemAppender.logs = list;
+		
+	}
 	
 	
 	@Override
@@ -48,7 +47,7 @@ public class MemAppender extends AppenderSkeleton{
 
 	@Override
 	public boolean requiresLayout() {
-		return false;
+		return true;
 	}
 
 	
