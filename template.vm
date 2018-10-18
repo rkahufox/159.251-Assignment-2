@@ -1,0 +1,1 @@
+Logger : ${c} toString : ${d} Message : ${m} Level : ${p} ThreadName : ${t}${n}
