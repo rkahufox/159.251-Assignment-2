@@ -12,15 +12,29 @@ import java.io.StringWriter;
 
 public class VelocityLayout extends PatternLayout {
 	
-	private static VelocityContext thisContext = new VelocityContext();
-	private static StringWriter sw = new StringWriter();
-	private static Template template = new Template();
+	private VelocityContext thisContext = new VelocityContext();
+	private StringWriter sw;
+	private Template template;
 	
-	//stringwriter context template make variable from event.get return writer.tostring override format
 	
+	public VelocityLayout()
+	{
+		super();
+	}
+	
+	
+	public VelocityLayout(String string) 
+	{
+		this.setConversionPattern(string);
+	}
+
 	@Override
     public String format(LoggingEvent event)
 	{	
+		sw  = new StringWriter();
+		template = new Template();
+		
+		
 		thisContext.put("c", event.getLogger());
 		thisContext.put("d", event.toString());
 	    thisContext.put("m", event.getMessage());
@@ -31,6 +45,8 @@ public class VelocityLayout extends PatternLayout {
 	    template = Velocity.getTemplate("template.vm");
 		
 		template.merge(thisContext, sw);
+		
+		
 				
 		return sw.toString();
 		

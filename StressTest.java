@@ -58,24 +58,25 @@ public class StressTest {
 		consoleAppender = null;
 		fileAppender = null;
 		velocityLay = null;
+		System.gc();
 		
 	}
 	
-	@Test
-	public void linkedListTest()
-	{
-		logs = new LinkedList<LoggingEvent>();
-		memAppender  = MemAppender.getInstance(logs);
-		logger.addAppender(memAppender);
-		memAppender.setMaxSize(100005);
-		
-		for(int i = 0; i < 100000; i++)
-		{
-			logger.warn("Linked list stress test hello");
-		}
-			
-	}
-
+//	@Test
+//	public void linkedListTest()
+//	{
+//		logs = new LinkedList<LoggingEvent>();
+//		memAppender  = MemAppender.getInstance(logs);
+//		logger.addAppender(memAppender);
+//		memAppender.setMaxSize(100005);
+//		
+//		for(int i = 0; i < 100000; i++)
+//		{
+//			logger.warn("Linked list stress test hello");
+//		}
+//			
+//	}
+//
 	@Test
 	public void linkedListMaxSizeTest()
 	{   
@@ -90,106 +91,106 @@ public class StressTest {
 			logger.warn("Linked list stress test maxsize");
 		}
 	}
-	
-	
-	
-	@Test
-	public void arrayListTest()
-	{
-		logger.addAppender(memAppender);
-		memAppender.setLayout(new org.apache.log4j.PatternLayout()); 
-		memAppender.setMaxSize(100000);
-		
-		
-		
-		consoleAppender = new ConsoleAppender();
-		consoleAppender.setLayout(velocityLay);
-	
-		for(int i = 0; i < 100000; i++)
-		{
-			logger.log(Level.WARN, "Array list stress test");
-		}
-	 	
-	}
-	
-	
-	@Test
-	public void arrayListMaxSizeTest()
-	{
-		logger.addAppender(memAppender);
-		memAppender.setLayout(new org.apache.log4j.PatternLayout()); 
-		memAppender.setMaxSize(1);
-		
-		
-		
-		consoleAppender = new ConsoleAppender();
-		consoleAppender.setLayout(velocityLay);
-	
-		for(int i = 0; i < 100000; i++)
-		{
-			logger.log(Level.WARN, "Array list stress test");
-		}
-	 	
-	}
-	
-	
-	@Test
-	public void consoleAppenderWithVelocityLayoutTest()
-	{
-		consoleAppender = new ConsoleAppender();
-		logger.addAppender(consoleAppender);
-		consoleAppender.setLayout(velocityLay);
-		
-		for(int i = 0; i < 100000; i++)
-		{
-			logger.log(Level.WARN, "Console appender (velocity layout) stress test");
-		}
-		
-	}
-	
-	
-	@Test
-	public void consoleAppenderWithPatternLayoutTest()
-	{	
-		consoleAppender = new ConsoleAppender();
-		logger.addAppender(consoleAppender);
-		consoleAppender.setLayout(new org.apache.log4j.PatternLayout());
-		
-		for(int i = 0; i < 100000; i++)
-		{
-			logger.log(Level.WARN, "Console appender (pattern layout) stress test");
-		}
-		
-	}
-
-	
-	@Test
-	public void fileAppenderWithVelocityLayoutTest() throws IOException
-	{   
-		fileAppender = new FileAppender();		
-		fileLoggerVelocity.addAppender(new org.apache.log4j.FileAppender(velocityLay, "velocityLayoutLogs.txt", false));
-		for(int i = 0; i < 100000; i++)
-		{
-			fileLoggerVelocity.log(Level.WARN, "File appender (velocity layout) stress test");
-			
-		}
-		
-}	
-	
-	
-	@Test
-	public void fileAppenderWithPatternLayoutTest() throws IOException
-	{   
-		fileAppender = new FileAppender();		
-		fileLoggerPattern.addAppender(new org.apache.log4j.FileAppender(new org.apache.log4j.PatternLayout(), "patternLayoutFileLogs.txt"));
-      
-	    
-		for(int i = 0; i < 100000; i++)
-		{
-			fileLoggerPattern.log(Level.WARN, "File appender (pattern layout) stress test");
-		}
-		
-}				
+//	
+//	
+//	
+//	@Test
+//	public void arrayListTest()
+//	{
+//		logger.addAppender(memAppender);
+//		memAppender.setLayout(new org.apache.log4j.PatternLayout()); 
+//		memAppender.setMaxSize(100000);
+//		
+//		
+//		
+//		consoleAppender = new ConsoleAppender();
+//		consoleAppender.setLayout(velocityLay);
+//	
+//		for(int i = 0; i < 100000; i++)
+//		{
+//			logger.log(Level.WARN, "Array list stress test");
+//		}
+//	 	
+//	}
+//	
+//	
+//	@Test
+//	public void arrayListMaxSizeTest()
+//	{
+//		logger.addAppender(memAppender);
+//		memAppender.setLayout(new org.apache.log4j.PatternLayout()); 
+//		memAppender.setMaxSize(1);
+//		
+//		
+//		
+//		consoleAppender = new ConsoleAppender();
+//		consoleAppender.setLayout(velocityLay);
+//	
+//		for(int i = 0; i < 100000; i++)
+//		{
+//			logger.log(Level.WARN, "Array list stress test");
+//		}
+//	 	
+//	}
+//	
+//	
+//	@Test
+//	public void consoleAppenderWithVelocityLayoutTest()
+//	{
+//		consoleAppender = new ConsoleAppender();
+//		logger.addAppender(consoleAppender);
+//		consoleAppender.setLayout(velocityLay);
+//		
+//		for(int i = 0; i < 100000; i++)
+//		{
+//			logger.log(Level.WARN, "Console appender (velocity layout) stress test");
+//		}
+//		
+//	}
+//	
+//	
+//	@Test
+//	public void consoleAppenderWithPatternLayoutTest()
+//	{	
+//		consoleAppender = new ConsoleAppender();
+//		logger.addAppender(consoleAppender);
+//		consoleAppender.setLayout(new org.apache.log4j.PatternLayout());
+//		
+//		for(int i = 0; i < 100000; i++)
+//		{
+//			logger.log(Level.WARN, "Console appender (pattern layout) stress test");
+//		}
+//		
+//	}
+//
+//	
+//	@Test
+//	public void fileAppenderWithVelocityLayoutTest() throws IOException
+//	{   
+//		fileAppender = new FileAppender();		
+//		fileLoggerVelocity.addAppender(new org.apache.log4j.FileAppender(velocityLay, "velocityLayoutLogs.txt", false));
+//		for(int i = 0; i < 100000; i++)
+//		{
+//			fileLoggerVelocity.log(Level.WARN, "File appender (velocity layout) stress test");
+//			
+//		}
+//		
+//}	
+//	
+//	
+//	@Test
+//	public void fileAppenderWithPatternLayoutTest() throws IOException
+//	{   
+//		fileAppender = new FileAppender();		
+//		fileLoggerPattern.addAppender(new org.apache.log4j.FileAppender(new org.apache.log4j.PatternLayout(), "patternLayoutFileLogs.txt"));
+//      
+//	    
+//		for(int i = 0; i < 100000; i++)
+//		{
+//			fileLoggerPattern.log(Level.WARN, "File appender (pattern layout) stress test");
+//		}
+//		
+//}				
 	
 		
 		
